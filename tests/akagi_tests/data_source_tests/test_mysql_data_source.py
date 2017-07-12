@@ -16,8 +16,8 @@ from akagi.data_sources import MySQLDataSource
 
 class TestMySQLDataSource(unittest.TestCase):
     def setUp(self):
-        self.query_body = 'select id, title from schema_1.table_1;'
-        self.ds_1 = MySQLDataSource.for_query(self.query_body)
+        self.query = 'select id, title from schema_1.table_1;'
+        self.ds_1 = MySQLDataSource(self.query)
 
     def test_init(self):
-        self.assertEqual(self.ds_1.query.body, self.query_body)
+        self.assertEqual(self.ds_1.query, self.query)

@@ -16,7 +16,11 @@ class LocalDataFile(DataFile):
 
     @property
     def raw_content(self):
-        return open(self.path).read()
+        return open(self.path, 'rb').read()
+
+    @property
+    def key(self):
+        return self.filename
 
     @property
     def content(self):

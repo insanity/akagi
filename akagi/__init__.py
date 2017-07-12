@@ -6,6 +6,8 @@ __email__ = 'ayemos.y@gmail.com'
 __version__ = '0.1.18'
 
 
+import os
+
 from akagi import data_file
 from akagi import data_files
 
@@ -13,3 +15,7 @@ from akagi import data_file_bundle
 from akagi import data_file_bundles
 
 from akagi import iterators
+
+
+def home():
+    return os.getenv('AKAGI_HOME', os.path.expanduser('~/.akagi'))

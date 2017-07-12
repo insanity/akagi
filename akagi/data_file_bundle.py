@@ -1,12 +1,14 @@
 from itertools import chain
+from abc import ABCMeta, abstractmethod, abstractproperty
 
 
-class DataFileBundle(object):
+class DataFileBundle(metaclass=ABCMeta):
     '''DataFileBundle is an base class of all data file bundles
     '''
 
+    @abstractproperty
     def data_files(self):
-        raise NotImplementedError
+        '''Retrieve the data files associated to the bundle.'''
 
     def __iter__(self):
         return iter(chain(*self.data_files))
@@ -18,5 +20,6 @@ class DataFileBundle(object):
         self.clear()
         return False
 
+    @abstractmethod
     def clear(self):
-        raise NotImplementedError
+        '''Clear associated datas.'''

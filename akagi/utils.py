@@ -1,3 +1,4 @@
+import re
 import six
 from six import BytesIO
 
@@ -22,3 +23,10 @@ def gzip_decompress(data):
         return gzip.GzipFile(fileobj=in_io, mode='rb').read()
     else:
         return gzip.decompress(data)
+
+
+def normalize_path(path):
+    if path is None:
+        return None
+    else:
+        return re.sub(r'^/', '', re.sub(r'\/{2,}', '/', path))

@@ -55,13 +55,16 @@ MySQLDataSource
 
   from akagi.data_sources import MySQLDataSource
 
-  with MySQLDataSource.for_query(
-          'select * from (select user_id, path from logs.imp limit 10000)', # Your Query here
-          ) as ds:
-      ds.save('./akagi_test') # save results to local
+  MySQLDataSource.for_query('select distinct a.user_id from articles a', # Your Query here
+      {
+        'host': '127.0.0.1',
+        'user': 'analytics_readonly',
+        'password': os.environ['DB_PASSWORD'],
+        'db': 'main'  # DB config (optional)
+        }) as ds:
 
-      for d in ds:
-          print(d) # iterate on result
+  for d in ds:
+      print(d) # iterate on result
 
 ++++++++++++++++++
 RedshiftDataSource
@@ -71,16 +74,12 @@ RedshiftDataSource
 
   from akagi.data_sources import RedshiftDataSource
 
-  with RedshiftDataSource.for_query(
-          'select * from (select user_id, path from logs.imp limit 10000)', # Your Query here
-          'logs', # schema
-          'imp', # table (Those two are used to generate unique prefix for S3 object (e.g. logs/imp/20170312_081527)
-          'log-redshift-unload.ap-northeast-1', # S3 Bucket for intermediate storage
-          ) as ds:
-      ds.save('./akagi_test') # save results to local
+  RedshiftDataSource.for_query(
+        'select * from (select user_id, path from logs.imp limit 10000)', # Your Query here
+        ) as ds:
 
-      for d in ds:
-          print(d) # iterate on result
+  for d in ds:
+      print(d) # iterate on result
 
 ++++++++++++
 S3DataSource

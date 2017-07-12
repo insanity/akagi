@@ -1,24 +1,26 @@
 import csv
-from six import StringIO
+from six import StringIO, BytesIO
 import six
 
 
 class CSVIterator(object):
     def __init__(self, content, skip_errors=True):
-        self.content = content
-        self._skip_erros = skip_errors
+        self.content = self.decode(content)
+        self._skip_errors = skip_errors
         self._iterator = None
 
     @classmethod
     def open_file(cls, path):
         return open(path, newline='')
 
-    @classmethod
-    def decode(cls, content):
+    def decode(self, content):
         if six.PY2:
             return content
         else:
-            return content.decode('utf-8')
+            if type(content) == BytesIO:
+                return StringIO(content.decode('utf-8')).read()
+            else:
+                return content
 
     def __next__(self):
         try:
@@ -33,5 +35,5 @@ class CSVIterator(object):
                 raise e
 
     def __iter__(self):
-        self._iterator = csv.reader(StringIO(self.content), escapechar='\\')
+        self._iterator = csv.reader(self.content, escapechar='\\')
         return self

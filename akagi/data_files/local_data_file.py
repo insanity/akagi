@@ -16,7 +16,7 @@ class LocalDataFile(DataFile):
 
     @property
     def raw_content(self):
-        return open(self.path, 'rb').read()
+        return open(self.path, 'rb')
 
     @property
     def key(self):
@@ -25,10 +25,6 @@ class LocalDataFile(DataFile):
     @property
     def content(self):
         if self._is_gzip():
-            content = gzip_decompress(open(self.path, 'rb').read())
-            return self.iterator_class.decode(content)
+            return gzip_decompress(self.raw_content)
         else:
-            return self.iterator_class.open_file(self.path).read()
-
-    def __iter__(self):
-        return iter(self.iterator_class(self.content))
+            return self.iterator_class.open_file(self.path)

@@ -49,11 +49,12 @@ class S3DataSource(DataSource):
 
     @property
     def _hex_hash(self):
-        sig = self._bucket_name
+        sig = [self._bucket_name]
         if self._prefix:
-            sig = '$$'.join([sig, self._prefix])
+            sig.append(self._prefix)
 
         if self._keys:
-            sig.append('$$'.join(self._keys))
+            sig.extend(self._keys)
 
+        sig = '$$'.join(sig)
         return hashlib.sha256(sig.encode('utf-8')).hexdigest()

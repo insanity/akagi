@@ -18,7 +18,8 @@ class S3DataFile(DataFile):
         return self.key
 
     @property
-    def key(self): return self.obj.key
+    def key(self):
+        return self.obj.key
 
     @property
     def raw_content(self):
@@ -34,10 +35,6 @@ class S3DataFile(DataFile):
             return gzip_decompress(self.raw_content)
         else:
             return self.raw_content
-
-    def __iter__(self):
-        cls = self.iterator_class
-        return iter(cls(cls.decode(self.content)))
 
     @property
     def _s3(self):

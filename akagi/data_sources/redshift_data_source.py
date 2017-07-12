@@ -112,7 +112,7 @@ class RedshiftDataSource(DataSource):
             try:
                 self.__bucket_name = os.environ['AKAGI_UNLOAD_BUCKET']
             except KeyError:
-                logger.error('hoge')
+                logger.error('Environment variable AKAGI_UNLOAD_BUCKET must be set when using RedshiftDataSource.')
                 sys.exit(1)
 
         return self.__bucket_name

@@ -1,3 +1,4 @@
+from abc import ABCMeta, abstractmethod
 from akagi.iterators import CSVIterator, BinaryIterator
 
 
@@ -11,9 +12,9 @@ class Iterator(object):
     def open_file(self, path):
         raise NotImplementedError
 
-    @classmethod
+    @abstractmethod
     def decode(self, content):
-        raise NotImplementedError
+        '''Return decoded content.'''
 
     @classmethod
     def get_iterator_class(cls, file_format):

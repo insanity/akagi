@@ -43,6 +43,19 @@ or from source::
   $ cd akagi
   $ python setup.py install
 
+
+--------
+Setup
+--------
+
+When using RedshiftDataSource, you need to set environment variable `AKAGI_UNLOAD_BUCKET` the name
+of the Amazon S3 bucket you like to use as intermediate storage of Redshift Unload command.
+
+
+::
+
+  $ export AKAGI_UNLOAD_BUCKET=xyz-unload-bucket.ap-northeast-1
+
 --------
 Example
 --------
@@ -74,9 +87,9 @@ RedshiftDataSource
 
   from akagi.data_sources import RedshiftDataSource
 
-  RedshiftDataSource.for_query(
-        'select * from (select user_id, path from logs.imp limit 10000)', # Your Query here
-        ) as ds:
+  ds = RedshiftDataSource.for_query(
+  'select * from (select user_id, path from logs.imp limit 10000)', # Your Query here
+  )
 
   for d in ds:
       print(d) # iterate on result
@@ -90,10 +103,11 @@ S3DataSource
 
   from akagi.data_sources import S3DataSource
 
-  with S3DataSource.for_prefix(
+  ds = S3DataSource.for_prefix(
           'image-data.ap-northeast-1',
           'data/image_net/zebra',
-          FileFormat.BINARY) as ds:
+          'binary')
+
       ...
 
 ++++++++++++++++++

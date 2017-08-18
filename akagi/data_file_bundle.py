@@ -1,4 +1,3 @@
-from itertools import chain
 from abc import ABCMeta, abstractmethod, abstractproperty
 
 
@@ -11,7 +10,10 @@ class DataFileBundle(metaclass=ABCMeta):
         '''Retrieve the data files associated to the bundle.'''
 
     def __iter__(self):
-        return iter(chain(*self.data_files))
+        for i, df in enumerate(self.data_files):
+            # XXX: cache here (S3DataFile => LocalDataFile)
+            print(df.__class__)
+            yield next(iter(df))
 
     def __enter__(self):
         return self

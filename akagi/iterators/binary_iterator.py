@@ -9,5 +9,8 @@ class BinaryIterator(object):
     def decode(self, content):
         return content
 
+    def __next__(self):
+        return next(iter(self))
+
     def __iter__(self):
         return iter([self.content])

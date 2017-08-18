@@ -24,16 +24,15 @@ class CSVIterator(object):
 
     def __next__(self):
         try:
-            n = self._iterator.__next__()
+            n = next(iter(self))
             return n
         except StopIteration as e:
             raise e
         except Exception as e:
             if self._skip_errors:
-                return self._iterator.__next__()
+                return next(iter(self))
             else:
                 raise e
 
     def __iter__(self):
-        self._iterator = csv.reader(self.content, escapechar='\\')
-        return self
+        return csv.reader(self.content, escapechar='\\')

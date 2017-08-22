@@ -6,9 +6,11 @@ import akagi
 from akagi.log import logger
 
 from concurrent.futures import ThreadPoolExecutor
+import six
 
 
-class DataSource(metaclass=ABCMeta):
+@six.add_metaclass(ABCMeta)
+class DataSource(object):
     '''DataSource is an abstract base class of all data sources
     '''
 

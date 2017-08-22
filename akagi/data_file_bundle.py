@@ -1,7 +1,9 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
+import six
 
 
-class DataFileBundle(metaclass=ABCMeta):
+@six.add_metaclass(ABCMeta)
+class DataFileBundle(object):
     '''DataFileBundle is an base class of all data file bundles
     '''
 

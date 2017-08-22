@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from akagi.iterators import CSVIterator, BinaryIterator
+import six
 
 
 class FileFormat(object):
@@ -7,6 +8,7 @@ class FileFormat(object):
     BINARY = 2
 
 
+@six.add_metaclass(ABCMeta)
 class Iterator(object):
     @classmethod
     def open_file(self, path):

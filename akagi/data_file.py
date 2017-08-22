@@ -1,8 +1,10 @@
 import os
 from abc import ABCMeta, abstractproperty
+import six
 
 
-class DataFile(metaclass=ABCMeta):
+@six.add_metaclass(ABCMeta)
+class DataFile(object):
     def __iter__(self):
         return self.iterator_class(self.content)
 

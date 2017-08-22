@@ -3,11 +3,8 @@ from abc import ABCMeta, abstractproperty
 
 
 class DataFile(metaclass=ABCMeta):
-    def __next__(self):
-        raise NotImplementedError
-
     def __iter__(self):
-        return iter(self.iterator_class(self.content))
+        return self.iterator_class(self.content)
 
     def _is_gzip(self):
         return os.path.splitext(self.filename)[-1] == '.gz'

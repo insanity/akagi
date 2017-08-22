@@ -1,6 +1,7 @@
 class BinaryIterator(object):
     def __init__(self, content):
         self.content = self.decode(content)
+        self._stop = False
 
     @classmethod
     def open_file(self, path):
@@ -10,7 +11,8 @@ class BinaryIterator(object):
         return content
 
     def __next__(self):
-        return next(iter(self))
-
-    def __iter__(self):
-        return iter([self.content])
+        if self._stop:
+            raise StopIteration
+        else:
+            self._stop = True
+            return self.content

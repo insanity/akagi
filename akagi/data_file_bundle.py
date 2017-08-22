@@ -12,8 +12,13 @@ class DataFileBundle(metaclass=ABCMeta):
     def __iter__(self):
         for i, df in enumerate(self.data_files):
             # XXX: cache here (S3DataFile => LocalDataFile)
-            print(df.__class__)
-            yield next(iter(df))
+
+            it = iter(df)
+            while True:
+                try:
+                    yield next(it)
+                except StopIteration as e:
+                    break
 
     def __enter__(self):
         return self
